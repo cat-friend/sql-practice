@@ -61,14 +61,14 @@ Millions and billions
 Divide by 1000000 (6 zeros) for millions. Divide by 1000000000 (9 zeros) for billions.
 */
 
-
--- SELECT name, ROUND(population/1000000, 2) as population, ROUND(GDP/1000000000, 2) as GDP FROM world WHERE continent = 'South America'
+SELECT name, ROUND(population/1000000, 2), ROUND(GDP/1000000000, 2) FROM world WHERE continent = 'South America'
 
 -- 10.
 -- Show the name and per-capita GDP for those countries with a GDP of at least one trillion (1000000000000; that is 12 zeros). Round this value to the nearest 1000.
 
 -- Show per-capita GDP for the trillion dollar countries to the nearest $1000.
 
+SELECT name, ROUND(GDP/population, -3) AS 'per-capita GDP, rounded to the nearest $1000' FROM world WHERE GDP >= 1000000000000
 
 
 -- 11.
@@ -81,7 +81,7 @@ Divide by 1000000 (6 zeros) for millions. Divide by 1000000000 (9 zeros) for bil
 -- You can use the LENGTH function to find the number of characters in a string
 -- For Microsoft SQL Server the function LENGTH is LEN
 
-
+SELECT name, capital FROM world WHERE LEN(name) = LEN(capital)
 
 -- 12.
 -- The capital of Sweden is Stockholm. Both words start with the letter 'S'.
@@ -90,7 +90,7 @@ Divide by 1000000 (6 zeros) for millions. Divide by 1000000000 (9 zeros) for bil
 -- You can use the function LEFT to isolate the first character.
 -- You can use <> as the NOT EQUALS operator.
 
-
+SELECT name, capital FROM world WHERE capital <> name AND LEFT(name, 1) = LEFT(capital, 1)
 
 -- 13.
 -- Equatorial Guinea and Dominican Republic have all of the vowels (a e i o u) in the name. They don't count because they have more than one word in the name.
@@ -99,3 +99,5 @@ Divide by 1000000 (6 zeros) for millions. Divide by 1000000000 (9 zeros) for bil
 
 -- You can use the phrase name NOT LIKE '%a%' to exclude characters from your results.
 -- The query shown misses countries like Bahamas and Belarus because they contain at least one 'a'
+
+SELECT name FROM world WHERE name NOT LIKE '% %' AND name LIKE '%a%' AND name LIKE '%a%' AND name LIKE '%e%' AND name LIKE '%i%' AND name LIKE '%o%' AND name LIKE '%u%'
